@@ -72,15 +72,21 @@ const loginUser = asyncHandler(async (req, res) => {
 
 // @desc    Get user data
 // @route   GET /api/users/me
-// @access  Public
+// @access  Private
 const getMe = asyncHandler(async (req, res) => {
-  res.json({
-    message: 'User data display',
+  // 1. deconstract value
+  const { _id, name, email } = await User.findById(req.user.id);
+
+  res.status(200).json({
+    id: _id,
+    name,
+    email,
   });
 });
 
 // Generate JWT
 const generateToken = (id) => {
+  // you can sign any data in payload, here we sign user id
   return jwt.sign({ id }, process.env.JWT_SECRET, {
     expiresIn: '30d',
   });

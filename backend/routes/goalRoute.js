@@ -1,26 +1,26 @@
 const express = require('express');
 const router = express.Router();
-
 const {
   getGoals,
   setGoal,
   updateGoal,
   deleteGoal,
 } = require('../controllers/goalController.js');
+const { protect } = require('../middleware/authMiddleware');
 
 // All url start with '/api/goals'
 
 // get
-router.get('/', getGoals);
+router.get('/', protect, getGoals);
 
 // create
-router.post('/', setGoal);
+router.post('/', protect, setGoal);
 
 // update
-router.put('/:id', updateGoal);
+router.put('/:id', protect, updateGoal);
 
 // delete
-router.delete('/:id', deleteGoal);
+router.delete('/:id', protect, deleteGoal);
 
 /* shortcut way
 router.route('/').get(getGoals).post(setGoal);
