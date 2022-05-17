@@ -9,6 +9,7 @@ function App() {
     <>
       <Router>
         <div className="container">
+          {/* custom component */}
           <Header />
           <Routes>
             <Route path="/" element={<Dashboard />} />
