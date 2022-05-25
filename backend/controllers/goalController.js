@@ -32,6 +32,8 @@ const setGoal = asyncHandler(async (req, res) => {
 // @route   PUT /api/goals/:id
 // @access  Private
 const updateGoal = asyncHandler(async (req, res) => {
+  // the user data is already get in middleware
+
   // 1. get the target
   const goal = await Goal.findById(req.params.id);
 
@@ -42,14 +44,13 @@ const updateGoal = asyncHandler(async (req, res) => {
   }
 
   // 3. check user
-  const user = await User.findById(req.user.id);
-  if (!user) {
+  if (!req.user) {
     res.status(400);
     throw new Error('User not foud');
   }
 
   // 4. check goal - user relationship
-  if (goal.user.toString() !== user.id) {
+  if (goal.user.toString() !== req.user.id) {
     res.status(401);
     throw new Error('User not authorized');
   }
@@ -66,6 +67,8 @@ const updateGoal = asyncHandler(async (req, res) => {
 // @route   DELETE /api/goals/:id
 // @access  Private
 const deleteGoal = asyncHandler(async (req, res) => {
+  // the user data is already get in middleware
+
   // 1. get the target
   const goal = await Goal.findById(req.params.id);
 
@@ -76,14 +79,13 @@ const deleteGoal = asyncHandler(async (req, res) => {
   }
 
   // 3. check user
-  const user = await User.findById(req.user.id);
-  if (!user) {
+  if (!req.user) {
     res.status(400);
     throw new Error('User not foud');
   }
 
   // 4. check goal - user relationship
-  if (goal.user.toString() !== user.id) {
+  if (goal.user.toString() !== req.user.id) {
     res.status(401);
     throw new Error('User not authorized');
   }
