@@ -50,7 +50,7 @@ export const goalSlice = createSlice({
         state.isLoading = false;
         state.isSuccess = true;
         state.goals = state.goals.filter(
-          (goal) => goal._iid !== action.payload.id
+          (goal) => goal._id !== action.payload.id
         );
       })
       .addCase(deleteGoal.rejected, (state, action) => {
